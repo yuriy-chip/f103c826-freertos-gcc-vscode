@@ -1,0 +1,372 @@
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.vTask_led_blink_pc13,"ax",%progbits
+  16              		.align	1
+  17              		.global	vTask_led_blink_pc13
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	vTask_led_blink_pc13:
+  25              	.LFB35:
+  26              		.file 1 "Src/main.c"
+   1:Src/main.c    **** #include "stm32f10x.h"
+   2:Src/main.c    **** #include "FreeRTOS.h"
+   3:Src/main.c    **** #include "task.h"
+   4:Src/main.c    **** #include "queue.h"
+   5:Src/main.c    **** 
+   6:Src/main.c    **** void GPIO_Init (void);
+   7:Src/main.c    **** 
+   8:Src/main.c    **** void vTask_led_blink_pc13 (void *argument);
+   9:Src/main.c    **** void vTask_led_blink_pc9 (void *argument);
+  10:Src/main.c    **** 
+  11:Src/main.c    **** int main(void){		
+  12:Src/main.c    **** 	
+  13:Src/main.c    **** 	GPIO_Init();
+  14:Src/main.c    **** 	
+  15:Src/main.c    **** 	xTaskCreate(vTask_led_blink_pc13, "LED1", 32, NULL, 1, NULL);
+  16:Src/main.c    **** 	xTaskCreate(vTask_led_blink_pc9, "LED2", 32, NULL, 1, NULL);
+  17:Src/main.c    **** 	
+  18:Src/main.c    **** 	vTaskStartScheduler();
+  19:Src/main.c    **** 	
+  20:Src/main.c    **** 	while(1)
+  21:Src/main.c    **** 	{
+  22:Src/main.c    **** 				
+  23:Src/main.c    **** 	}
+  24:Src/main.c    **** 	
+  25:Src/main.c    **** }
+  26:Src/main.c    **** 
+  27:Src/main.c    **** /**************************************************************************************************
+  28:Src/main.c    **** 
+  29:Src/main.c    **** void GPIO_Init (void){
+  30:Src/main.c    **** 	
+  31:Src/main.c    **** 	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+  32:Src/main.c    **** 
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 2
+
+
+  33:Src/main.c    **** 	GPIOC->CRH &= ~GPIO_CRH_CNF13;
+  34:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE13_0;
+  35:Src/main.c    **** 	
+  36:Src/main.c    **** 	GPIOC->CRH &= ~GPIO_CRH_CNF9;
+  37:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE9_0;
+  38:Src/main.c    **** 	
+  39:Src/main.c    **** }
+  40:Src/main.c    **** 
+  41:Src/main.c    **** void vTask_led_blink_pc13 (void *argument){
+  27              		.loc 1 41 43 view -0
+  28              		.cfi_startproc
+  29              		@ Volatile: function does not return.
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33              		.loc 1 41 43 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  39              	.LVL1:
+  40              	.L2:
+  42:Src/main.c    **** 	
+  43:Src/main.c    **** 	while(1)
+  41              		.loc 1 43 2 is_stmt 1 discriminator 1 view .LVU2
+  44:Src/main.c    **** 	{
+  45:Src/main.c    **** 		
+  46:Src/main.c    **** 		GPIOC->BSRR |= GPIO_BSRR_BS13;
+  42              		.loc 1 46 3 discriminator 1 view .LVU3
+  43              		.loc 1 46 15 is_stmt 0 discriminator 1 view .LVU4
+  44 0002 094C     		ldr	r4, .L4
+  45 0004 2369     		ldr	r3, [r4, #16]
+  46 0006 43F40053 		orr	r3, r3, #8192
+  47 000a 2361     		str	r3, [r4, #16]
+  47:Src/main.c    **** 		vTaskDelay(1000);
+  48              		.loc 1 47 3 is_stmt 1 discriminator 1 view .LVU5
+  49 000c 4FF47A70 		mov	r0, #1000
+  50 0010 FFF7FEFF 		bl	vTaskDelay
+  51              	.LVL2:
+  48:Src/main.c    **** 		GPIOC->BSRR |= GPIO_BSRR_BR13;
+  52              		.loc 1 48 3 discriminator 1 view .LVU6
+  53              		.loc 1 48 15 is_stmt 0 discriminator 1 view .LVU7
+  54 0014 2369     		ldr	r3, [r4, #16]
+  55 0016 43F00053 		orr	r3, r3, #536870912
+  56 001a 2361     		str	r3, [r4, #16]
+  49:Src/main.c    **** 		vTaskDelay(1000);
+  57              		.loc 1 49 3 is_stmt 1 discriminator 1 view .LVU8
+  58 001c 4FF47A70 		mov	r0, #1000
+  59 0020 FFF7FEFF 		bl	vTaskDelay
+  60              	.LVL3:
+  43:Src/main.c    **** 	{
+  61              		.loc 1 43 7 discriminator 1 view .LVU9
+  62 0024 EDE7     		b	.L2
+  63              	.L5:
+  64 0026 00BF     		.align	2
+  65              	.L4:
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 3
+
+
+  66 0028 00100140 		.word	1073811456
+  67              		.cfi_endproc
+  68              	.LFE35:
+  70              		.section	.text.vTask_led_blink_pc9,"ax",%progbits
+  71              		.align	1
+  72              		.global	vTask_led_blink_pc9
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  76              		.fpu softvfp
+  78              	vTask_led_blink_pc9:
+  79              	.LFB36:
+  50:Src/main.c    **** 		
+  51:Src/main.c    **** 	}
+  52:Src/main.c    **** 	
+  53:Src/main.c    **** }
+  54:Src/main.c    **** 
+  55:Src/main.c    **** void vTask_led_blink_pc9 (void *argument){
+  80              		.loc 1 55 42 view -0
+  81              		.cfi_startproc
+  82              		@ Volatile: function does not return.
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              	.LVL4:
+  86              		.loc 1 55 42 is_stmt 0 view .LVU11
+  87 0000 08B5     		push	{r3, lr}
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 8
+  90              		.cfi_offset 3, -8
+  91              		.cfi_offset 14, -4
+  92              	.LVL5:
+  93              	.L7:
+  56:Src/main.c    **** 	
+  57:Src/main.c    **** 	while(1)
+  94              		.loc 1 57 2 is_stmt 1 discriminator 1 view .LVU12
+  58:Src/main.c    **** 	{
+  59:Src/main.c    **** 	
+  60:Src/main.c    **** 		GPIOC->BSRR |= GPIO_BSRR_BR9;
+  95              		.loc 1 60 3 discriminator 1 view .LVU13
+  96              		.loc 1 60 15 is_stmt 0 discriminator 1 view .LVU14
+  97 0002 094C     		ldr	r4, .L9
+  98 0004 2369     		ldr	r3, [r4, #16]
+  99 0006 43F00073 		orr	r3, r3, #33554432
+ 100 000a 2361     		str	r3, [r4, #16]
+  61:Src/main.c    **** 		vTaskDelay(1000);
+ 101              		.loc 1 61 3 is_stmt 1 discriminator 1 view .LVU15
+ 102 000c 4FF47A70 		mov	r0, #1000
+ 103 0010 FFF7FEFF 		bl	vTaskDelay
+ 104              	.LVL6:
+  62:Src/main.c    **** 		GPIOC->BSRR |= GPIO_BSRR_BS9;
+ 105              		.loc 1 62 3 discriminator 1 view .LVU16
+ 106              		.loc 1 62 15 is_stmt 0 discriminator 1 view .LVU17
+ 107 0014 2369     		ldr	r3, [r4, #16]
+ 108 0016 43F40073 		orr	r3, r3, #512
+ 109 001a 2361     		str	r3, [r4, #16]
+  63:Src/main.c    **** 		vTaskDelay(1000);
+ 110              		.loc 1 63 3 is_stmt 1 discriminator 1 view .LVU18
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 4
+
+
+ 111 001c 4FF47A70 		mov	r0, #1000
+ 112 0020 FFF7FEFF 		bl	vTaskDelay
+ 113              	.LVL7:
+  57:Src/main.c    **** 	{
+ 114              		.loc 1 57 7 discriminator 1 view .LVU19
+ 115 0024 EDE7     		b	.L7
+ 116              	.L10:
+ 117 0026 00BF     		.align	2
+ 118              	.L9:
+ 119 0028 00100140 		.word	1073811456
+ 120              		.cfi_endproc
+ 121              	.LFE36:
+ 123              		.section	.text.GPIO_Init,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	GPIO_Init
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu softvfp
+ 131              	GPIO_Init:
+ 132              	.LFB34:
+  29:Src/main.c    **** 	
+ 133              		.loc 1 29 22 view -0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+  31:Src/main.c    **** 
+ 138              		.loc 1 31 2 view .LVU21
+  31:Src/main.c    **** 
+ 139              		.loc 1 31 15 is_stmt 0 view .LVU22
+ 140 0000 0B4A     		ldr	r2, .L12
+ 141 0002 9369     		ldr	r3, [r2, #24]
+ 142 0004 43F01003 		orr	r3, r3, #16
+ 143 0008 9361     		str	r3, [r2, #24]
+  33:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE13_0;
+ 144              		.loc 1 33 2 is_stmt 1 view .LVU23
+  33:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE13_0;
+ 145              		.loc 1 33 13 is_stmt 0 view .LVU24
+ 146 000a 0A4B     		ldr	r3, .L12+4
+ 147 000c 5A68     		ldr	r2, [r3, #4]
+ 148 000e 22F44002 		bic	r2, r2, #12582912
+ 149 0012 5A60     		str	r2, [r3, #4]
+  34:Src/main.c    **** 	
+ 150              		.loc 1 34 2 is_stmt 1 view .LVU25
+  34:Src/main.c    **** 	
+ 151              		.loc 1 34 13 is_stmt 0 view .LVU26
+ 152 0014 5A68     		ldr	r2, [r3, #4]
+ 153 0016 42F48012 		orr	r2, r2, #1048576
+ 154 001a 5A60     		str	r2, [r3, #4]
+  36:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE9_0;
+ 155              		.loc 1 36 2 is_stmt 1 view .LVU27
+  36:Src/main.c    **** 	GPIOC->CRH |= GPIO_CRH_MODE9_0;
+ 156              		.loc 1 36 13 is_stmt 0 view .LVU28
+ 157 001c 5A68     		ldr	r2, [r3, #4]
+ 158 001e 22F0C002 		bic	r2, r2, #192
+ 159 0022 5A60     		str	r2, [r3, #4]
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 5
+
+
+  37:Src/main.c    **** 	
+ 160              		.loc 1 37 2 is_stmt 1 view .LVU29
+  37:Src/main.c    **** 	
+ 161              		.loc 1 37 13 is_stmt 0 view .LVU30
+ 162 0024 5A68     		ldr	r2, [r3, #4]
+ 163 0026 42F01002 		orr	r2, r2, #16
+ 164 002a 5A60     		str	r2, [r3, #4]
+  39:Src/main.c    **** 
+ 165              		.loc 1 39 1 view .LVU31
+ 166 002c 7047     		bx	lr
+ 167              	.L13:
+ 168 002e 00BF     		.align	2
+ 169              	.L12:
+ 170 0030 00100240 		.word	1073876992
+ 171 0034 00100140 		.word	1073811456
+ 172              		.cfi_endproc
+ 173              	.LFE34:
+ 175              		.section	.rodata.main.str1.4,"aMS",%progbits,1
+ 176              		.align	2
+ 177              	.LC0:
+ 178 0000 4C454431 		.ascii	"LED1\000"
+ 178      00
+ 179 0005 000000   		.align	2
+ 180              	.LC1:
+ 181 0008 4C454432 		.ascii	"LED2\000"
+ 181      00
+ 182              		.section	.text.main,"ax",%progbits
+ 183              		.align	1
+ 184              		.global	main
+ 185              		.syntax unified
+ 186              		.thumb
+ 187              		.thumb_func
+ 188              		.fpu softvfp
+ 190              	main:
+ 191              	.LFB33:
+  11:Src/main.c    **** 	
+ 192              		.loc 1 11 15 is_stmt 1 view -0
+ 193              		.cfi_startproc
+ 194              		@ Volatile: function does not return.
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197 0000 00B5     		push	{lr}
+ 198              	.LCFI2:
+ 199              		.cfi_def_cfa_offset 4
+ 200              		.cfi_offset 14, -4
+ 201 0002 83B0     		sub	sp, sp, #12
+ 202              	.LCFI3:
+ 203              		.cfi_def_cfa_offset 16
+  13:Src/main.c    **** 	
+ 204              		.loc 1 13 2 view .LVU33
+ 205 0004 FFF7FEFF 		bl	GPIO_Init
+ 206              	.LVL8:
+  15:Src/main.c    **** 	xTaskCreate(vTask_led_blink_pc9, "LED2", 32, NULL, 1, NULL);
+ 207              		.loc 1 15 2 view .LVU34
+ 208 0008 0024     		movs	r4, #0
+ 209 000a 0194     		str	r4, [sp, #4]
+ 210 000c 0125     		movs	r5, #1
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 6
+
+
+ 211 000e 0095     		str	r5, [sp]
+ 212 0010 2346     		mov	r3, r4
+ 213 0012 2022     		movs	r2, #32
+ 214 0014 0749     		ldr	r1, .L17
+ 215 0016 0848     		ldr	r0, .L17+4
+ 216 0018 FFF7FEFF 		bl	xTaskCreate
+ 217              	.LVL9:
+  16:Src/main.c    **** 	
+ 218              		.loc 1 16 2 view .LVU35
+ 219 001c 0194     		str	r4, [sp, #4]
+ 220 001e 0095     		str	r5, [sp]
+ 221 0020 2346     		mov	r3, r4
+ 222 0022 2022     		movs	r2, #32
+ 223 0024 0549     		ldr	r1, .L17+8
+ 224 0026 0648     		ldr	r0, .L17+12
+ 225 0028 FFF7FEFF 		bl	xTaskCreate
+ 226              	.LVL10:
+  18:Src/main.c    **** 	
+ 227              		.loc 1 18 2 view .LVU36
+ 228 002c FFF7FEFF 		bl	vTaskStartScheduler
+ 229              	.LVL11:
+ 230              	.L15:
+  20:Src/main.c    **** 	{
+ 231              		.loc 1 20 2 discriminator 1 view .LVU37
+  23:Src/main.c    **** 	
+ 232              		.loc 1 23 2 discriminator 1 view .LVU38
+  20:Src/main.c    **** 	{
+ 233              		.loc 1 20 7 discriminator 1 view .LVU39
+ 234 0030 FEE7     		b	.L15
+ 235              	.L18:
+ 236 0032 00BF     		.align	2
+ 237              	.L17:
+ 238 0034 00000000 		.word	.LC0
+ 239 0038 00000000 		.word	vTask_led_blink_pc13
+ 240 003c 08000000 		.word	.LC1
+ 241 0040 00000000 		.word	vTask_led_blink_pc9
+ 242              		.cfi_endproc
+ 243              	.LFE33:
+ 245              		.text
+ 246              	.Letext0:
+ 247              		.file 2 "c:\\software\\embeddedgcc\\arm_gcc\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 248              		.file 3 "c:\\software\\embeddedgcc\\arm_gcc\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 249              		.file 4 "Inc/core_cm3.h"
+ 250              		.file 5 "Inc/system_stm32f10x.h"
+ 251              		.file 6 "Inc/stm32f10x.h"
+ 252              		.file 7 "Inc/task.h"
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:16     .text.vTask_led_blink_pc13:0000000000000000 $t
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:24     .text.vTask_led_blink_pc13:0000000000000000 vTask_led_blink_pc13
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:66     .text.vTask_led_blink_pc13:0000000000000028 $d
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:71     .text.vTask_led_blink_pc9:0000000000000000 $t
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:78     .text.vTask_led_blink_pc9:0000000000000000 vTask_led_blink_pc9
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:119    .text.vTask_led_blink_pc9:0000000000000028 $d
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:124    .text.GPIO_Init:0000000000000000 $t
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:131    .text.GPIO_Init:0000000000000000 GPIO_Init
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:170    .text.GPIO_Init:0000000000000030 $d
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:176    .rodata.main.str1.4:0000000000000000 $d
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:183    .text.main:0000000000000000 $t
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:190    .text.main:0000000000000000 main
+C:\Users\User\AppData\Local\Temp\ccwKlEeJ.s:238    .text.main:0000000000000034 $d
+
+UNDEFINED SYMBOLS
+vTaskDelay
+xTaskCreate
+vTaskStartScheduler
